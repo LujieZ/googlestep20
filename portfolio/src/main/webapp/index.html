@@ -2,17 +2,91 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>My Portfolio</title>
+    <title>_LUJIE_</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="script.js"></script>
   </head>
+
   <body>
     <div id="content">
-      <h1>My Portfolio</h1>
-      <p>This is my portfolio.</p>
-      <p>Click here to get a random message:</p>
-      <button onclick="addRandomGreeting()">Hello</button>
-      <div id="greeting-container"></div>
-    </div>
+      <h1>LUJIE ZHAO</h1>
+
+      <section class="details">
+        <div id="left-details">
+            <p>"Keep your head in the cloud."</p>
+            <img src="/home/lujiez/headshot.JPG" alt="headshot">
+        </div>
+        <div id="right-details">
+            <i style="font-size:24px" class="fa">&#xf08c;</i><a href="https://www.linkedin.com/in/lujie-sue-zhao/" style="color: white">linkedin.com/in/lujie-sue-zhao</a>
+            <br>
+            <i style="font-size:24px" class="fa">&#xf092;</i><a href="https://github.com/LujieZ" style="color: white">github.com/LujieZ </a>
+        </div>
+        <div class="clear"></div>
+      </section>
+
+      <section class="area">
+        <div id="display-container">
+            <h2>About</h2>
+            <p> A sophomore BS student studying Computer Science
+                at NYU Tandon, minors in Business Studies and Finance. 
+                Currently interested in pursuing software/finance internship
+                    opportunities. </p>
+            <p>Please contact me at lujie.sue.zhao@gmail.com </p>
+            </div>
+
+        <div id="display-container">
+            <h2>Experience</h2>
+            <ul>
+                <li><p>Teaching Assistant, Research</p>
+                    <p id="title">Research &amp; Development Committee, General Engineering 1003 Course</p>
+                    <p>Redesign the course and build C++ library for new VEX semester-long design project Mars Rover Robot. Mentor Rapid Assembly & Design projects while providing technical assistance. Teach first year students basic engineering concepts through various laboratory experiments.</p>
+                </li>
+                <li><p>Research Intern </p>
+                    <p id="title">Prof. Chen Feng, NYU Tandon School of Engineering
+                    <ul>
+                        <li><p>Image Process using OpenCV: Developed Python algorithms for image detection and path planning for single mobile robot to print in 2D.</p></li>
+                        <li><p>Revit Modeling and Gazebo Simulation: Modified two mobile robots in real world and modeled them accordingly in Revit. Built Gazebo simulated environment and collected training data (~7500 images) for future machine learning process.</p></li>
+                        <li><p>Robot Operating System Implementation: Implemented ROS to the two robots. Calibrated them to run successfully and drew a 2D floor plan on a wood board (3m x 6m).</p>
+                        </li>
+                    </ul>    
+                    </p>
+                </li>
+            </ul>
+        </div>
+
+        <div id="display-container">
+            <h2>Activities</h2>
+            <ul>
+                <li><p>Team Member</p>
+                    <p id="title">Poly Programming Team</p>
+                    <p>Engage in team activities and contribute in weekly practice for annual ACM-ICPC regional contest.</p>
+                </li>
+                <li><p>Preception Sub-Team Member</p>
+                    <p id="title">NYU Self Drive</p>
+                    <p>Work with computer vision(PyTorch) to develop machine learning algorithms for an autonomous self-driving mini car. Attend weekly meetings and lectures.
+                    </p>
+            </ul>
+        </div>
+
+        <div id="display-container">
+            <h2>Education</h2>
+            <ul>
+                <li><p>New York University</p>
+                <p>Bachler of Science - BS, Computer Science</p>
+                <p>Minors in Business Studies, Finance</p>
+                </li>
+                <li><p>Hamden Hall Country Day School</p></li>
+                <li><p>Yale Young Global Scholars</p></li>
+                <li><p>Engineering Summer Academy at Penn</p></li>
+            </ul>
+        </div>
+
+        <em>Greeting for you:</em>
+        <button onclick="addRandomGreeting()">Hello</button>
+        <div id="greeting-container"></div>
+      </div>
+
+    </section>
   </body>
 </html>
