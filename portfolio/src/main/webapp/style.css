@@ -13,13 +13,13 @@ article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section {
 }
 
 html,body {
-    background-color: #421C52; 
+    background-color: #4A225D; 
     font-family: Calibri, Candara, Segoe, "Segoe UI", Optima, Arial, sans-serif;
     font-size: 17px;
     font-style: normal;
     font-weight: 200;
     line-height: 18.3px;
-    color: white;
+    color: #FCFAF2;
 }
 
 .clear{
@@ -28,34 +28,60 @@ html,body {
 
 /* Text format */
 h1 { 
-    margin-top: 60px;  
+    margin-top: 60px; 
+    padding: 35px; 
     text-align: center;
     font-size: 28pt;
     font-style: bold;
     font-weight: 700;
     line-height: 30.4px;
+    color: #EFBB24;
 }
 
 h2 {
     font-size: 23px; 
-    font-style: normal; 
     font-weight: 700; 
     line-height: 24.4px; 
+    color: rgb(250, 210, 124);
 }
 
 h3{
     margin-top: 30px;
     text-align: center;
     font-size: 20px;
-    font-style: normal;
     font-weight: 700;
     line-height: 21.3px;
+}
+
+a {
+    color: #FCFAF2
 }
 
 form {
     margin-left: 30px;
 }
 
+ul {
+    margin-left:5px;
+    list-style: none;
+}
+
+ul ul{
+    margin-left: 13px;
+    list-style-image: url("https://img.icons8.com/officexs/16/000000/pixel-star.png")
+}
+
+hr {
+    display: block; 
+    margin-left: auto; 
+    margin-right: auto;
+    width: 75%; 
+    overflow: hidden; 
+    border-style: inset; 
+    border-width: 1px;
+    color: #BDC0BA;
+    opacity: 0.8;
+}
 /* ID format */
 #title {
     font-style: italic;
@@ -67,28 +93,37 @@ form {
     margin-right: auto;
     width: 87%;
     max-width: 800px;
-    background-color: #732C7B;
+    background-color: #66327C;
 }
 
 #headshot {
-    width: 12.5%;
-    float: left;
+    margin-left: 35px;
+    width: 60%;
 }
 
 #headshot img {
     width: 100%;
     height: auto;
-	border-radius: 50px;
+	border-radius: 65px;
 }
 
 #left-details {
-    padding: 20px;
+    margin-bottom: 30px;
     float: left;
+    padding: 10px;
+    width: 35%;
+    height: 130px;
 }
 
 #right-details {
-    padding: 20px;
+    margin-top: 70px;
     float: right;
+    padding: 10px;
+    width: 45%;
+}
+
+#bold {
+    font-weight: 600;
 }
 
 #display-container {
@@ -104,10 +139,47 @@ form {
 
 /* Class format */
 .details {
-    padding: 25px 35px;
-    border-bottom: #9C8AA5;
+    width: 80%;
+    margin: 0 auto;
 }
 
 .area {
     padding: 0 40px;
+}
+
+.hide1 {
+    display: none;
+    width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.hide1 img {
+    width: 100%;
+    height: auto;
+}
+
+.hide2 {
+    display: none;
+    width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.hide2 img {
+    width: 100%;
+    height: auto;
+}
+
+/* Hover format */
+a:hover {
+    color: #EFBB24;
+}
+
+.hover1:hover + .hide1 {
+    display: block;
+}
+
+.hover2:hover + .hide2 {
+    display: block;
 }
