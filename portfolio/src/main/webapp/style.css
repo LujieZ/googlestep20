@@ -43,6 +43,18 @@ h2 {
     line-height: 24.4px; 
 }
 
+h3{
+    margin-top: 30px;
+    text-align: center;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 21.3px;
+}
+
+form {
+    margin-left: 30px;
+}
 
 /* ID format */
 #title {
@@ -56,6 +68,17 @@ h2 {
     width: 87%;
     max-width: 800px;
     background-color: #732C7B;
+}
+
+#headshot {
+    width: 12.5%;
+    float: left;
+}
+
+#headshot img {
+    width: 100%;
+    height: auto;
+	border-radius: 50px;
 }
 
 #left-details {
