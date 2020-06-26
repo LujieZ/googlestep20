@@ -59,7 +59,7 @@ function createListElement(comment) {
 
       // Remove the comment from the DOM.
       commentElement.remove();
-      // parseSomething();
+      fetch('/data').then(parseSomething());
   });
 
   commentElement.appendChild(contentElement);
