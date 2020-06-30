@@ -28,4 +28,8 @@ public final class Comment {
     this.timestamp = timestamp;
     this.email = email;
   }
+
+  public int comparedTo() {
+      return timestamp;
+  }
 }

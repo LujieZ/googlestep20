@@ -40,7 +40,6 @@ public class DataServlet extends HttpServlet {
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     Query query = new Query("Comment").addSort("timestamp", SortDirection.DESCENDING);
-
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     PreparedQuery results = datastore.prepare(query);
     
@@ -50,7 +49,6 @@ public class DataServlet extends HttpServlet {
         String new_content = (String) entity.getProperty("content");
         long new_timestamp = (long) entity.getProperty("timestamp");
         String new_email = (String) entity.getProperty("email");
-
         Comment new_comment = new Comment(new_id, new_content, new_timestamp, new_email);
         new_comments.add(new_comment);
     }

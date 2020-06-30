@@ -100,6 +100,7 @@ hr {
     width: 87%;
     max-width: 800px;
     background-color: #0b468c;
+    margin-bottom: 30px;
 }
 
 #headshot {
@@ -146,7 +147,6 @@ hr {
 
 #login {
     margin-top: 20px;
-    margin-bottom: 40px;
     float: right;
 }
 
@@ -226,4 +226,3 @@ a.menu_links {
 .hover2:hover + .hide2 {
     display: block;
 }
-

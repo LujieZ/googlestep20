@@ -67,7 +67,7 @@ function parseSomething(){
         numberCommentsDisplay = Math.min(numberCommentsDisplay, object.length);
 
         for (var i = 0; i < numberCommentsDisplay; i++) {
-            commentsListElement.appendChild(createListElement(object[i]));
+            commentsListElement.appendChild(createListElement(sortedObjs[i]));
         }
         
     });
@@ -98,7 +98,7 @@ function createListElement(comment) {
 
       // Remove the comment from the DOM.
       commentElement.remove();
-      fetch('/data').then(parseSomething());
+      fetch('/comment').then(parseSomething());
   });
 
   commentElement.appendChild(contentElement);
