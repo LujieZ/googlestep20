@@ -1,4 +1,4 @@
- // Copyright 2019 Google LLC
+// Copyright 2019 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -36,21 +36,24 @@ import javax.servlet.http.HttpServletResponse;
 /** Servlet that handles comments data */
 @WebServlet("/comment")
 public class DataServlet extends HttpServlet {
+    public static String NAME = "Comment";
+    public static String CONTNET = "content";
+    public static String TIMESTAMP = "timestamp";
+    public static String EMAIL = "email";
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    Query query = new Query("Comment");
+    Query query = new Query(NAME);
 
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     PreparedQuery results = datastore.prepare(query);
     
     List<Comment> new_comments = new ArrayList<>();
     for (Entity entity : results.asIterable()) {
-
         long new_id = entity.getKey().getId();
-        String new_content = (String) entity.getProperty("content");
-        long new_timestamp = (long) entity.getProperty("timestamp");
-        String new_email = (String) entity.getProperty("email");
+        String new_content = (String) entity.getProperty(CONTNET);
+        long new_timestamp = (long) entity.getProperty(TIMESTAMP);
+        String new_email = (String) entity.getProperty(EMAIL);
         Comment new_comment = new Comment(new_id, new_content, new_timestamp, new_email);
 
         new_comments.add(new_comment);
@@ -59,34 +62,28 @@ public class DataServlet extends HttpServlet {
     response.setContentType("application/json;"); // Send the JSON as the response
     String json = new Gson().toJson(new_comments);
     response.getWriter().println(json);
-
   }
 
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         // Post user comment if a comment is submitted
         String comment = request.getParameter("user-comment");
-        System.out.println("Comment received...");
         long timestamp = System.currentTimeMillis();
 
         // Get user's email address
         UserService userService = UserServiceFactory.getUserService();
         String userEmail = userService.getCurrentUser().getEmail();
-        System.out.println("User email received...");
 
         // Create comment entity and store it in Datastore
-        Entity commentEntity = new Entity("Comment");
-        commentEntity.setProperty("content", comment);
-        commentEntity.setProperty("timestamp", timestamp);
-        commentEntity.setProperty("email", userEmail);
+        Entity commentEntity = new Entity(NAME);
+        commentEntity.setProperty(CONTNET, comment);
+        commentEntity.setProperty(TIMESTAMP, timestamp);
+        commentEntity.setProperty(EMAIL, userEmail);
 
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
         datastore.put(commentEntity);
-        System.out.println("Entity generated");
 
         // Redirect back to the HTML page.
         response.sendRedirect("/index.html");
-        
     }
-  
 }

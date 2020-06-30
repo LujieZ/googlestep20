@@ -18,14 +18,12 @@ package com.google.sps.data;
  * A comment in the listed comments 
  */
 public final class Comment {
-
     private final long id;
     private final String content;
     private final long timestamp;
     private final String email;
 
   public Comment(long id, String content, long timestamp, String email) {
-
     this.id = id;
     this.content = content;
     this.timestamp = timestamp;
