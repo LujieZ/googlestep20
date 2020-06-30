@@ -1,3 +1,6 @@
+@import url(https://fonts.googleapis.com/css?family=Orbitron);
+@import url(https://fonts.googleapis.com/css2?family=Titillium+Web:wght@300&display=swap);
+
 /* Display reset */
 html,body,div,span,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,abbr,address,cite,code,del,dfn,em,img,ins,kbd,q,samp,small,strong,sub,sup,var,b,i,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,canvas,details,figcaption,figure,footer,header,hgroup,menu,nav,section,summary,time,mark,audio,video {
     border:0;
@@ -13,12 +16,10 @@ article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section {
 }
 
 html,body {
-    background-color: #4A225D; 
-    font-family: Calibri, Candara, Segoe, "Segoe UI", Optima, Arial, sans-serif;
+    background-color: #092047; 
+    font-family: 'Titillium Web', sans-serif;
     font-size: 17px;
-    font-style: normal;
-    font-weight: 200;
-    line-height: 18.3px;
+    line-height: 19.1px;
     color: #FCFAF2;
 }
 
@@ -28,33 +29,35 @@ html,body {
 
 /* Text format */
 h1 { 
-    margin-top: 60px; 
-    padding: 35px; 
+    font-family: 'Orbitron', courier, sans-serif;
+    margin-top: 70px; 
+    padding: 40px; 
     text-align: center;
-    font-size: 28pt;
-    font-style: bold;
+    font-size: 43px;
     font-weight: 700;
     line-height: 30.4px;
-    color: #EFBB24;
 }
 
 h2 {
+    font-family: 'Orbitron', courier, sans-serif;
     font-size: 23px; 
-    font-weight: 700; 
+    font-weight: 600; 
     line-height: 24.4px; 
-    color: rgb(250, 210, 124);
+    color: #E03C8A;
 }
 
 h3{
+    font-family: 'Orbitron', courier, sans-serif;
     margin-top: 30px;
     text-align: center;
     font-size: 20px;
-    font-weight: 700;
+    font-weight: 300;
     line-height: 21.3px;
+    color: #05d9e8;
 }
 
 a {
-    color: #FCFAF2
+    color: #FCFAF2;
 }
 
 form {
@@ -68,7 +71,7 @@ ul {
 
 ul ul{
     margin-left: 13px;
-    list-style-image: url("https://img.icons8.com/officexs/16/000000/pixel-star.png")
+    list-style-type: square;
 }
 
 hr {
@@ -79,13 +82,16 @@ hr {
     overflow: hidden; 
     border-style: inset; 
     border-width: 1px;
-    color: #BDC0BA;
-    opacity: 0.8;
+    color: #C1328E;
 }
+
 /* ID format */
 #title {
     font-style: italic;
-    font-size: 15px;
+}
+
+#comment {
+    display: none;
 }
 
 #content {
@@ -93,7 +99,7 @@ hr {
     margin-right: auto;
     width: 87%;
     max-width: 800px;
-    background-color: #66327C;
+    background-color: #0b468c;
 }
 
 #headshot {
@@ -123,6 +129,7 @@ hr {
 }
 
 #bold {
+    font-style: bold;
     font-weight: 600;
 }
 
@@ -135,6 +142,30 @@ hr {
     padding: 20px 30px;
     margin-left: auto;
     margin-right: auto;
+}
+
+#login {
+    margin-top: 20px;
+    margin-bottom: 40px;
+    float: right;
+}
+
+#glow {
+    font-size: 43px;
+    color: #fff;
+    text-align: center;
+    -webkit-animation: glow 1s ease-in-out infinite alternate;
+    -moz-animation: glow 1s ease-in-out infinite alternate;
+    animation: glow 1s ease-in-out infinite alternate;
+}
+
+@-webkit-keyframes glow {
+  from {
+    text-shadow: 0 0 4px #fff, 0 0 9px #fff, 0 0 13px #E03C8A, 0 0 17px #E03C8A, 0 0 20px #E03C8A, 0 0 30px #E03C8A;
+  }
+  to {
+    text-shadow: 0 0 7px #fff, 0 0 12px #C1328E, 0 0 17px #C1328E, 0 0 22px #C1328E, 0 0 37px #C1328E, 0 0 37px #C1328E, 0 0 40px #C1328E;
+  }
 }
 
 /* Class format */
@@ -173,9 +204,21 @@ hr {
 
 /* Hover format */
 a:hover {
-    color: #EFBB24;
+    color: #E03C8A;
+};
 }
 
+a.menu_links { 
+    cursor: pointer; 
+}
+
+.hover1 {
+    cursor: pointer; 
+}
+
+.hover2 {
+    cursor: pointer; 
+}
 .hover1:hover + .hide1 {
     display: block;
 }
@@ -183,3 +226,4 @@ a:hover {
 .hover2:hover + .hide2 {
     display: block;
 }
+

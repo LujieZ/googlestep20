@@ -13,13 +13,52 @@
 // limitations under the License.
 
 /**
+ * Hide the comments form by default and fetch the login status from the servlet
+ * If the user is logged in, unhide the form
+ * If the user is not logged in, display a login link
+ */
+function checkLoginStatus(){
+    fetch('/home') // sends a request to /home
+    .then(response => response.json()) // parse the response as JSON
+    .then((object) => { // reference the status in response
+
+        const status = object.status;
+        const url = object.url;
+
+        if (status == 'true') {
+            document.getElementById('comment').style.display = 'block';
+            var text = 'logouthere';
+        }
+        else {
+            var text = 'loginhere';
+        }
+
+        // create the button
+        var button = document.createElement('button');
+        button.setAttribute('id','logbtn');
+        button.innerHTML = String(text);
+
+        // append in login div
+        var login = document.getElementById('login');
+        login.appendChild(button);
+
+        // add event handler
+        button.addEventListener('click', 
+        function() {
+            window.location.href = url;
+        });
+
+    });
+}
+
+/**
  * Fetch the JSON string from the server and parse JSON
  */
 function parseSomething(){
 
     fetch('/comment')  // sends a request to /data
     .then(response => response.json()) // parses the response as JSON
-    .then((object) => { // now we can reference the fields in myObject!
+    .then((object) => { // reference the fields in Comment
 
         const commentsListElement = document.getElementById('comments-container');
         commentsListElement.innerHTML = '';
@@ -50,7 +89,7 @@ function createListElement(comment) {
   commentElement.className = 'comment';
 
   const contentElement = document.createElement('span');
-  contentElement.innerText = comment.content;
+  contentElement.innerText = comment.content + ' by ' + comment.email;
   
   const deleteButtonElement = document.createElement('button');
   deleteButtonElement.innerText = "goawayplease";

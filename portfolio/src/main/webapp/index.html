@@ -10,7 +10,7 @@
 
   <body onload = "parseSomething()">
     <div id="content">
-      <h1>LUJIE ZHAO</h1>
+      <h1 id="glow">LUJIE ZHAO</h1>
 
         <div class="details">
             <div id="left-details">
@@ -21,9 +21,11 @@
             </div>
         
             <div id="right-details">
+                <i style="font-size:22px" class="fa">&#xf0e0;</i><a href="mailto:lujie.sue.zhao@gmail.com">lujie.sue.zhao@gmail.com</a>
+                <br>
                 <i style="font-size:24px" class="fa">&#xf08c;</i><a href="https://www.linkedin.com/in/lujie-sue-zhao/">linkedin.com/in/lujie-sue-zhao</a>
-            <br>
-                <i style="font-size:24px" class="fa">&#xf092;</i><a href="https://github.com/LujieZ">LujieZ </a>
+                <br>
+                <i style="font-size:24px" class="fa">&#xf092;</i><a href="https://github.com/LujieZ">LujieZ</a>
             </div>
             <div class="clear"></div>
         </div>
@@ -46,7 +48,9 @@
                 <li><p id="bold">Teaching Assistant</p>
                     <p id="title">Research &amp; Development Committee, General Engineering 1003 Course</p>
                     <p>
-                        Redesign the course and build <a herf="https://github.com/tg1625/Vex-Library">C++ library</a> for new VEX semester-long design project Mars Rover Robot. 
+                        Redesign the course and build 
+                        <a href="https://github.com/tg1625/Vex-Library">C++ library</a> 
+                        for new VEX semester-long design project Mars Rover Robot. 
                         Mentor Rapid Assembly & Design projects while providing technical assistance. Teach first year students 
                         basic engineering concepts through various laboratory experiments.
                     </p>
@@ -110,26 +114,34 @@
         <hr>
 
         <h3>Leave a comment!</h3>
-        <form action="/comment" method="POST">
-            <label for="user-comment">Type in any text:</label><br>
-            <input type="text" name="user-comment" id="user-comment" value="turnitup"><br>
-            <br><input type="submit" value="readytogo">
-            <br><br>
-        </form>                
-        
-        <label for="number-comment">How many reviews you want to see?(1-5)</label>
-        <select type="number" name="number-comment" id ="number-comment" onchange="parseSomething()">
-            <option value="0">letmesee</option>
-            <option value="5">5</option>
-            <option value="4">4</option>
-            <option value="3">3</option>
-            <option value="2">2</option>
-            <option value="1">1</option>
-        </select>
-        <br><br>
-        
-        <ul id="comments-container"></ul><br>
+        <script>
+            checkLoginStatus();
+        </script>
 
+        <div id="comment">
+            <form action="/comment" method="POST">
+                <label for="user-comment">Type in any text:</label><br>
+                <input type="text" name="user-comment" id="user-comment" value="turnitup"><br>
+                <br><input type="submit" value="readytogo">
+                <br><br>
+            </form>                
+        
+            <label for="number-comment">How many reviews you want to see?(1-5)</label>
+            <select type="number" name="number-comment" id ="number-comment" onchange="parseSomething()">
+                <option value="0">letmesee</option>
+                <option value="5">5</option>
+                <option value="4">4</option>
+                <option value="3">3</option>
+                <option value="2">2</option>
+                <option value="1">1</option>
+            </select>
+            <br><br>
+            
+            <ul id="comments-container"></ul><br>
+        </div>
+
+        <div id="login"></div>
+        
       </div>
 
     </section>
