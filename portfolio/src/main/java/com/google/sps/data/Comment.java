@@ -15,7 +15,7 @@
 package com.google.sps.data;
 
 /** 
- * Data container that returns in JSON to the user
+ * Data container that returns in JSON to the user.
  */
 public final class Comment {
     private final long id;
