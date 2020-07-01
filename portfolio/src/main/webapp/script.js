@@ -21,7 +21,6 @@ function checkLoginStatus(){
     fetch('/home') // Sends a request to /home
     .then(response => response.json()) // Parse the response as JSON
     .then((object) => { // Reference the status in response
-
         const status = object.status;
         const url = object.url;
 
@@ -44,10 +43,9 @@ function checkLoginStatus(){
 
         // Add event handler
         button.addEventListener('click', 
-        function() {
-            window.location.href = url;
+            function() {
+                window.location.href = url;
         });
-
     });
 }
 
@@ -59,7 +57,6 @@ function parseSomething(){
     fetch('/comment')  // Sends a request to /data
     .then(response => response.json()) // Parses the response as JSON
     .then((object) => { // Reference the fields in Comment
-
         object.sort(function(object1, object2) {
             return object2.timestamp - object1.timestamp;
         });
@@ -72,9 +69,7 @@ function parseSomething(){
         for (var i = 0; i < numberCommentsDisplay; i++) {
             commentsListElement.appendChild(createListElement(sortedObjs[i]));
         }
-        
     });
-
 }
 
 /** 

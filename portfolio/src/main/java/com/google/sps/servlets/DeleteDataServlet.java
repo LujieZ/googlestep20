@@ -1,4 +1,4 @@
- // Copyright 2019 Google LLC
+// Copyright 2019 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -26,7 +26,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
 /** Servlet that delete selected comment */
 @WebServlet("/delete-data")
 public class DeleteDataServlet extends HttpServlet {
@@ -38,12 +37,9 @@ public class DeleteDataServlet extends HttpServlet {
 
       // Identify the key for the entity
       Key entityKey = KeyFactory.createKey("Comment", id);
-      System.out.println("Entity key generated...");
 
       // Delete the comment from datastore by key
       DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
       datastore.delete(entityKey);
-      System.out.println("Comment deleted");
   }
-
 }
