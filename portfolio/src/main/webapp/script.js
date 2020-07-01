@@ -70,7 +70,7 @@ function parseSomething(){
         numberCommentsDisplay = Math.min(numberCommentsDisplay, object.length);
 
         for (var i = 0; i < numberCommentsDisplay; i++) {
-            commentsListElement.appendChild(createListElement(sortedObjs[i]));
+            commentsListElement.appendChild(createListElement(object[i]));
         }
         
     });

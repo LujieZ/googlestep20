@@ -30,5 +30,5 @@ public final class Comment {
     this.content = content;
     this.timestamp = timestamp;
     this.email = email;
-
   }
+}
