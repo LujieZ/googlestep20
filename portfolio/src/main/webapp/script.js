@@ -18,9 +18,9 @@
  * If the user is not logged in, display a login link
  */
 function checkLoginStatus(){
-    fetch('/home') // sends a request to /home
-    .then(response => response.json()) // parse the response as JSON
-    .then((object) => { // reference the status in response
+    fetch('/home') // Sends a request to /home
+    .then(response => response.json()) // Parse the response as JSON
+    .then((object) => { // Reference the status in response
 
         const status = object.status;
         const url = object.url;
@@ -33,16 +33,16 @@ function checkLoginStatus(){
             var text = 'loginhere';
         }
 
-        // create the button
+        // Create the button
         var button = document.createElement('button');
         button.setAttribute('id','logbtn');
         button.innerHTML = String(text);
 
-        // append in login div
+        // Append in login div
         var login = document.getElementById('login');
         login.appendChild(button);
 
-        // add event handler
+        // Add event handler
         button.addEventListener('click', 
         function() {
             window.location.href = url;
@@ -56,10 +56,13 @@ function checkLoginStatus(){
  */
 function parseSomething(){
 
-    fetch('/comment')  // sends a request to /data
-    .then(response => response.json()) // parses the response as JSON
-    .then((object) => { // reference the fields in Comment
+    fetch('/comment')  // Sends a request to /data
+    .then(response => response.json()) // Parses the response as JSON
+    .then((object) => { // Reference the fields in Comment
 
+        object.sort(function(object1, object2) {
+            return object2.timestamp - object1.timestamp;
+        });
         const commentsListElement = document.getElementById('comments-container');
         commentsListElement.innerHTML = '';
 
@@ -74,16 +77,9 @@ function parseSomething(){
 
 }
 
-/**
-    Delete a comment by its id 
- */
- function deleteComment(comment){
-     const params = new URLSearchParams();
-     params.append('id', comment.id);
-     fetch('/delete-data', {method: 'POST', body: params});
- }
-
-/** Creates an <li> element containing text. */
+/** 
+ * Creates an <li> element containing text. 
+*/
 function createListElement(comment) {
   const commentElement = document.createElement('li');
   commentElement.className = 'comment';
@@ -98,7 +94,7 @@ function createListElement(comment) {
 
       // Remove the comment from the DOM.
       commentElement.remove();
-      fetch('/data').then(parseSomething());
+      fetch('/comment').then(parseSomething());
   });
 
   commentElement.appendChild(contentElement);
@@ -106,3 +102,12 @@ function createListElement(comment) {
 
   return commentElement;
 }
+
+/**
+ * Delete a comment by its id 
+ */
+ function deleteComment(comment){
+     const params = new URLSearchParams();
+     params.append('id', comment.id);
+     fetch('/delete-data', {method: 'POST', body: params});
+ }
