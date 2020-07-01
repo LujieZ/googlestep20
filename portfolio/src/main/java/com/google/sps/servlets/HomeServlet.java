@@ -29,34 +29,20 @@ public class HomeServlet extends HttpServlet {
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-
         UserService userService = UserServiceFactory.getUserService();
         String urlToRedirectTo = "/index.html";
 
         if (userService.isUserLoggedIn()) {
             String logoutUrl = userService.createLogoutURL(urlToRedirectTo);
 
-            String result = "{";
-            result += "\"status\": ";
-            result += "\"true\"";
-            result += ", ";
-            result += "\"url\": ";
-            result += "\""+ logoutUrl + "\"";
-            result += "}";
+            String result = "{\"status\": \"true\", \"url\": \""+ logoutUrl + "\"}";
 
             response.setContentType("application/json;"); // Send the JSON as the response
             response.getWriter().println(result);
-
         } else {
             String loginUrl = userService.createLoginURL(urlToRedirectTo);
 
-            String result = "{";
-            result += "\"status\": ";
-            result += "\"false\"";
-            result += ", ";
-            result += "\"url\": ";
-            result += "\""+ loginUrl + "\"";
-            result += "}";
+            String result = "{\"status\": \"false\", \"url\": \""+ loginUrl + "\"}";
 
             response.getWriter().println(result);
     }
