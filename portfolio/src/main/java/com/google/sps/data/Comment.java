@@ -15,7 +15,7 @@
 package com.google.sps.data;
 
 /** 
- * A comment in the listed comments 
+ * Data container that returns in JSON to the user
  */
 public final class Comment {
     private final long id;
