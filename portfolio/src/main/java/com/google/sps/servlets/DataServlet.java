@@ -37,7 +37,7 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/comment")
 public class DataServlet extends HttpServlet {
     public static String NAME = "Comment";
-    public static String CONTNET = "content";
+    public static String CONTENT = "content";
     public static String TIMESTAMP = "timestamp";
     public static String EMAIL = "email";
 
@@ -51,7 +51,9 @@ public class DataServlet extends HttpServlet {
     List<Comment> new_comments = new ArrayList<>();
     for (Entity entity : results.asIterable()) {
         long new_id = entity.getKey().getId();
-        String new_content = (String) entity.getProperty(CONTNET);
+        String new_content = (String) entity.getProperty(
+        
+        );
         long new_timestamp = (long) entity.getProperty(TIMESTAMP);
         String new_email = (String) entity.getProperty(EMAIL);
         Comment new_comment = new Comment(new_id, new_content, new_timestamp, new_email);
@@ -66,17 +68,17 @@ public class DataServlet extends HttpServlet {
 
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        // Post user comment if a comment is submitted
+        // Post user comment if a comment is submitted.
         String comment = request.getParameter("user-comment");
         long timestamp = System.currentTimeMillis();
 
-        // Get user's email address
+        // Get user's email address.
         UserService userService = UserServiceFactory.getUserService();
         String userEmail = userService.getCurrentUser().getEmail();
 
-        // Create comment entity and store it in Datastore
+        // Create comment entity and store it in Datastore.
         Entity commentEntity = new Entity(NAME);
-        commentEntity.setProperty(CONTNET, comment);
+        commentEntity.setProperty(CONTENT, comment);
         commentEntity.setProperty(TIMESTAMP, timestamp);
         commentEntity.setProperty(EMAIL, userEmail);
 
