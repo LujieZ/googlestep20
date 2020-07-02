@@ -13,35 +13,35 @@
 // limitations under the License.
 
 /**
- * Hide the comments form by default and fetch the login status from the servlet
- * If the user is logged in, unhide the form
- * If the user is not logged in, display a login link
+ * Hide the comments form by default and fetch the login status from the servlet.
+ * If the user is logged in, unhide the form.
+ * If the user is not logged in, display a login link.
  */
 function checkLoginStatus(){
-    fetch('/home') // Sends a request to /home
-    .then(response => response.json()) // Parse the response as JSON
-    .then((object) => { // Reference the status in response
+    fetch('/home') // Sends a request to /home.
+    .then(response => response.json()) // Parse the response as JSON.
+    .then((object) => { // Reference the status in response.
         const status = object.status;
         const url = object.url;
 
         if (status == 'true') {
             document.getElementById('comment').style.display = 'block';
-            var text = 'logouthere';
+            var text = 'LOG OUT';
         }
         else {
-            var text = 'loginhere';
+            var text = 'LOG IN';
         }
 
-        // Create the button
+        // Create the button.
         var button = document.createElement('button');
         button.setAttribute('id','logbtn');
         button.innerHTML = String(text);
 
-        // Append in login div
+        // Append in login div.
         var login = document.getElementById('login');
         login.appendChild(button);
 
-        // Add event handler
+        // Add event handler.
         button.addEventListener('click', 
             function() {
                 window.location.href = url;
@@ -54,9 +54,9 @@ function checkLoginStatus(){
  */
 function parseSomething(){
 
-    fetch('/comment')  // Sends a request to /data
-    .then(response => response.json()) // Parses the response as JSON
-    .then((object) => { // Reference the fields in Comment
+    fetch('/comment')  // Sends a request to /data.
+    .then(response => response.json()) // Parses the response as JSON.
+    .then((object) => { // Reference the fields in Comment.
         object.sort(function(object1, object2) {
             return object2.timestamp - object1.timestamp;
         });
@@ -83,7 +83,7 @@ function createListElement(comment) {
   contentElement.innerText = comment.content + ' by ' + comment.email;
   
   const deleteButtonElement = document.createElement('button');
-  deleteButtonElement.innerText = "goawayplease";
+  deleteButtonElement.innerText = "GO AWAY PLEASE";
   deleteButtonElement.addEventListener('click', () => {
       deleteComment(comment);
 
@@ -99,7 +99,7 @@ function createListElement(comment) {
 }
 
 /**
- * Delete a comment by its id 
+ * Delete a comment by its id.
  */
  function deleteComment(comment){
      const params = new URLSearchParams();
