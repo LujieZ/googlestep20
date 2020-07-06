@@ -41,20 +41,23 @@ function checkLoginStatus(){
         var login = document.getElementById('login');
         login.appendChild(button);
 
-        // Add event handler.
+        // Access the directed url after log in or log out.
+        // If the user click log out, log out then direct to index.html.
+        // If the user click log in, log in with google email then direct to
+        // index.html.
         button.addEventListener('click', 
             function() {
                 window.location.href = url;
-        });
+            });
     });
 }
 
 /**
- * Fetch the JSON string from the server and parse JSON
+ * Fetch the comments in JSON format from the server and populates the DOM
  */
 function parseSomething(){
 
-    fetch('/comment')  // Sends a request to /data.
+    fetch('/comment')  // Sends a request to /comment.
     .then(response => response.json()) // Parses the response as JSON.
     .then((object) => { // Reference the fields in Comment.
         object.sort(function(object1, object2) {
@@ -99,7 +102,7 @@ function createListElement(comment) {
 }
 
 /**
- * Delete a comment by its id.
+ * Delete a comment by its ID.
  */
  function deleteComment(comment){
      const params = new URLSearchParams();
