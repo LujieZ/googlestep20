@@ -48,19 +48,18 @@ public class DataServlet extends HttpServlet {
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     PreparedQuery results = datastore.prepare(query);
     
-    List<Comment> new_comments = new ArrayList<>();
+    List<Comment> newComments = new ArrayList<>();
     for (Entity entity : results.asIterable()) {
-        long new_id = entity.getKey().getId();
-        String new_content = (String)entity.getProperty();
-        long new_timestamp = (long)entity.getProperty(TIMESTAMP);
-        String new_email = (String)entity.getProperty(EMAIL);
-        Comment new_comment = new Comment(new_id, new_content, new_timestamp, new_email);
+        long newID = entity.getKey().getId();
+        String newContent = (String)entity.getProperty(CONTENT);
+        long newTimestamp = (long)entity.getProperty(TIMESTAMP);
+        String newEmail = (String)entity.getProperty(EMAIL);
+        Comment newComment = new Comment(newID, newContent, newTimestamp, newEmail);
 
-        new_comments.add(new_comment);
+        newComments.add(newComment);
     }
-
     response.setContentType("application/json;"); // Send the JSON as the response
-    String json = new Gson().toJson(new_comments);
+    String json = new Gson().toJson(newComments);
     response.getWriter().println(json);
   }
 
