@@ -18,17 +18,15 @@
  * If the user is not logged in, display a login link.
  */
 function checkLoginStatus(){
-    fetch('/home') // Sends a request to /home.
-    .then(response => response.json()) // Parse the response as JSON.
-    .then((object) => { // Reference the status in response.
+    fetch('/home') 
+    .then(response => response.json()) 
+    .then((object) => {
         const status = object.status;
         const url = object.url;
-
         if (status == 'true') {
             document.getElementById('comment').style.display = 'block';
             var text = 'LOG OUT';
-        }
-        else {
+        } else {
             var text = 'LOG IN';
         }
 
@@ -41,10 +39,7 @@ function checkLoginStatus(){
         var login = document.getElementById('login');
         login.appendChild(button);
 
-        // Access the directed url after log in or log out.
-        // If the user click log out, log out then direct to index.html.
-        // If the user click log in, log in with google email then direct to
-        // index.html.
+        // Access the URL that is feteched from /home.
         button.addEventListener('click', 
             function() {
                 window.location.href = url;
@@ -53,13 +48,12 @@ function checkLoginStatus(){
 }
 
 /**
- * Fetch the comments in JSON format from the server and populates the DOM
+ * Fetch the comments in JSON format from the server and populates the DOM.
  */
 function parseSomething(){
-
-    fetch('/comment')  // Sends a request to /comment.
-    .then(response => response.json()) // Parses the response as JSON.
-    .then((object) => { // Reference the fields in Comment.
+    fetch('/comment')  
+    .then(response => response.json()) 
+    .then((object) => { 
         object.sort(function(object1, object2) {
             return object2.timestamp - object1.timestamp;
         });
@@ -94,7 +88,6 @@ function createListElement(comment) {
       commentElement.remove();
       fetch('/comment').then(parseSomething());
   });
-
   commentElement.appendChild(contentElement);
   commentElement.appendChild(deleteButtonElement);
 
