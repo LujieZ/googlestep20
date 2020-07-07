@@ -14,6 +14,9 @@
 
 package com.google.sps.servlets;
 
+import com.google.gson.Gson;
+import com.google.sps.data.Comment;
+import com.google.sps.data.Constants;
 import com.google.sps.servlets.DataServlet;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
@@ -23,8 +26,6 @@ import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
-import com.google.gson.Gson;
-import com.google.sps.data.Comment;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -36,14 +37,10 @@ import javax.servlet.http.HttpServletResponse;
 /** Servlet that handles comments data */
 @WebServlet("/comment")
 public class DataServlet extends HttpServlet {
-    public static String NAME = "Comment";
-    public static String CONTENT = "content";
-    public static String TIMESTAMP = "timestamp";
-    public static String EMAIL = "email";
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    Query query = new Query(NAME);
+    Query query = new Query(Constants.NAME);
 
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     PreparedQuery results = datastore.prepare(query);
@@ -51,9 +48,9 @@ public class DataServlet extends HttpServlet {
     List<Comment> newComments = new ArrayList<>();
     for (Entity entity : results.asIterable()) {
         long newID = entity.getKey().getId();
-        String newContent = (String)entity.getProperty(CONTENT);
-        long newTimestamp = (long)entity.getProperty(TIMESTAMP);
-        String newEmail = (String)entity.getProperty(EMAIL);
+        String newContent = (String)entity.getProperty(Constants.CONTENT);
+        long newTimestamp = (long)entity.getProperty(Constants.TIMESTAMP);
+        String newEmail = (String)entity.getProperty(Constants.EMAIL);
         Comment newComment = new Comment(newID, newContent, newTimestamp, newEmail);
 
         newComments.add(newComment);
@@ -74,10 +71,10 @@ public class DataServlet extends HttpServlet {
         String userEmail = userService.getCurrentUser().getEmail();
 
         // Create comment entity and store it in Datastore.
-        Entity commentEntity = new Entity(NAME);
-        commentEntity.setProperty(CONTENT, comment);
-        commentEntity.setProperty(TIMESTAMP, timestamp);
-        commentEntity.setProperty(EMAIL, userEmail);
+        Entity commentEntity = new Entity(Constants.NAME);
+        commentEntity.setProperty(Constants.CONTENT, comment);
+        commentEntity.setProperty(Constants.TIMESTAMP, timestamp);
+        commentEntity.setProperty(Constants.EMAIL, userEmail);
 
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
         datastore.put(commentEntity);

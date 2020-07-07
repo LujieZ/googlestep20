@@ -15,6 +15,7 @@
 package com.google.sps.servlets;
 
 import com.google.gson.Gson;
+import com.google.sps.data.Constants;
 import com.google.sps.servlets.DataServlet;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
@@ -26,19 +27,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/** Servlet that delete selected comment */
+/** Servlet that delete a selected comment */
 @WebServlet("/delete-data")
 public class DeleteDataServlet extends HttpServlet {
 
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-      // Post comment id if delete button is pushed
       long id = Long.parseLong(request.getParameter("id"));
-
-      // Identify the key for the entity
-      Key entityKey = KeyFactory.createKey("Comment", id);
-
-      // Delete the comment from datastore by key
+      Key entityKey = KeyFactory.createKey(Constants.NAME, id);
       DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
       datastore.delete(entityKey);
   }

@@ -35,14 +35,20 @@ public class HomeServlet extends HttpServlet {
         if (userService.isUserLoggedIn()) {
             String logoutUrl = userService.createLogoutURL(urlToRedirectTo);
 
-            String result = "{\"status\": \"true\", \"url\": \""+ logoutUrl + "\"}";
+            String result = "{";
+            result += "\"status\": \"true\", ";
+            result += "\"url\": \""+ logoutUrl + "\"";
+            result += "}";
 
-            response.setContentType("application/json;"); // Send the JSON as the response
+            response.setContentType("application/json;"); 
             response.getWriter().println(result);
         } else {
             String loginUrl = userService.createLoginURL(urlToRedirectTo);
 
-            String result = "{\"status\": \"false\", \"url\": \""+ loginUrl + "\"}";
+            String result = "{";
+            result += "\"status\": \"true\", ";
+            result += "\"url\": \""+ loginUrl + "\"";
+            result += "}";
 
             response.getWriter().println(result);
     }

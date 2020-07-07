@@ -71,7 +71,7 @@ function parseSomething(){
 
 /** 
  * Creates an <li> element containing text. 
-*/
+ */
 function createListElement(comment) {
   const commentElement = document.createElement('li');
   commentElement.className = 'comment';
