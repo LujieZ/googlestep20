@@ -23,11 +23,32 @@ html,body {
     color: #FCFAF2;
 }
 
-.clear{
+.clear {
     clear: both;
 }
 
 /* Text format */
+nav ul, footer ul {
+    overflow: hidden;
+    list-style: none;
+    padding: 14px 16px;
+    background-color: #05d9e8;
+}
+
+nav ul li, footer ul li {
+    font-family: 'Titillium Web', sans-serif;
+    text-align: center;
+    text-decoration: none;
+    font-size: 17px;
+    font-weight: 600;
+    margin-right: 20px;
+    display: inline;
+}
+
+nav a:hover {
+    color: #fcee09;
+}
+
 h1 { 
     font-family: 'Orbitron', courier, sans-serif;
     margin-top: 70px; 
@@ -53,11 +74,12 @@ h3 {
     font-size: 20px;
     font-weight: 300;
     line-height: 21.3px;
-    color: #05d9e8;
+    color: #fcee09;
 }
 
 a {
     color: #FCFAF2;
+    text-decoration: none;
 }
 
 form {
@@ -92,15 +114,6 @@ hr {
 
 #comment {
     display: none;
-}
-
-#content {
-    margin-left: auto;
-    margin-right: auto;
-    width: 87%;
-    max-width: 800px;
-    background-color: #0b468c;
-    margin-bottom: 30px;
 }
 
 #headshot {
@@ -159,6 +172,12 @@ hr {
     animation: glow 1s ease-in-out infinite alternate;
 }
 
+#map {
+    width: 797px;
+    height: 600px;
+    border: thin solid #fcee09;
+}
+
 @-webkit-keyframes glow {
   from {
     text-shadow: 0 0 4px #fff, 0 0 9px #fff, 0 0 13px #E03C8A, 0 0 17px #E03C8A, 0 0 20px #E03C8A, 0 0 30px #E03C8A;
@@ -176,6 +195,15 @@ hr {
 
 .area {
     padding: 0 40px;
+}
+
+.content {
+    margin-left: auto;
+    margin-right: auto;
+    width: 87%;
+    max-width: 800px;
+    background-color: #0b468c;
+    margin-bottom: 30px;
 }
 
 .hide1 {
@@ -204,8 +232,7 @@ hr {
 
 /* Hover format */
 a:hover {
-    color: #E03C8A;
-};
+    color: #fcee09;
 }
 
 a.menu_links { 
@@ -219,10 +246,21 @@ a.menu_links {
 .hover2 {
     cursor: pointer; 
 }
+
 .hover1:hover + .hide1 {
     display: block;
 }
 
 .hover2:hover + .hide2 {
     display: block;
+}
+
+.sticky {
+    position: fixed;
+    top: 0;
+    width: 610%;
+}
+
+.sticky + .content {
+  padding-top: 60px;
 }

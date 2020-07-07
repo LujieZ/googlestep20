@@ -19,8 +19,8 @@
  */
 function checkLoginStatus(){
     fetch('/home') 
-    .then(response => response.json()) 
-    .then((object) => {
+    .then(response => response.json())
+    .then((object) => { 
         const status = object.status;
         const url = object.url;
         if (status == 'true') {
@@ -64,7 +64,7 @@ function parseSomething(){
         numberCommentsDisplay = Math.min(numberCommentsDisplay, object.length);
 
         for (var i = 0; i < numberCommentsDisplay; i++) {
-            commentsListElement.appendChild(createListElement(sortedObjs[i]));
+            commentsListElement.appendChild(createListElement(object[i]));
         }
     });
 }
@@ -102,3 +102,14 @@ function createListElement(comment) {
      params.append('id', comment.id);
      fetch('/delete-data', {method: 'POST', body: params});
  }
+
+var map;
+/**
+ * Initial map and add it to the map page
+ */
+function initMap() {
+    map = new google.maps.Map(
+        document.getElementById("map"), 
+        {center: { lat: -34.397, lng: 150.644 },zoom: 8
+    });
+}
