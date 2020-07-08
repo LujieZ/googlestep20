@@ -18,8 +18,8 @@
  * If the user is not logged in, display a login link.
  */
 function checkLoginStatus(){
-    fetch('/home') 
-    .then(response => response.json()) 
+    fetch('/home')
+    .then(response => response.json())
     .then((object) => {
         const status = object.status;
         const url = object.url;
@@ -30,17 +30,14 @@ function checkLoginStatus(){
             var text = 'LOG IN';
         }
 
-        // Create the button.
         var button = document.createElement('button');
         button.setAttribute('id','logbtn');
         button.innerHTML = String(text);
-
-        // Append in login div.
         var login = document.getElementById('login');
         login.appendChild(button);
 
         // Access the URL that is feteched from /home.
-        button.addEventListener('click', 
+        button.addEventListener('click',
             function() {
                 window.location.href = url;
             });
@@ -51,9 +48,9 @@ function checkLoginStatus(){
  * Fetch the comments in JSON format from the server and populates the DOM.
  */
 function parseSomething(){
-    fetch('/comment')  
-    .then(response => response.json()) 
-    .then((object) => { 
+    fetch('/comment')
+    .then(response => response.json())
+    .then((object) => {
         object.sort(function(object1, object2) {
             return object2.timestamp - object1.timestamp;
         });
@@ -64,7 +61,7 @@ function parseSomething(){
         numberCommentsDisplay = Math.min(numberCommentsDisplay, object.length);
 
         for (var i = 0; i < numberCommentsDisplay; i++) {
-            commentsListElement.appendChild(createListElement(sortedObjs[i]));
+            commentsListElement.appendChild(createListElement(object[i]));
         }
     });
 }

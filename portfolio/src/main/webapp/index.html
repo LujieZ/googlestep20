@@ -6,10 +6,18 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="script.js"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA5US3DhAtsPBqYGlsjwAlD-TTH71MLH_Y&callback=initMap"
+    type="text/javascript"></script>
   </head>
 
   <body onload = "parseSomething()">
-    <div id="content">
+    <nav>
+        <ul class="sticky">
+            <li><a href="/index.html">HOME</a></li>
+            <li><a href="/map.html">MAP</a></li>
+        </ul>
+    </nav>
+    <div class="content">
       <h1 id="glow">LUJIE ZHAO</h1>
 
         <div class="details">
@@ -21,11 +29,11 @@
             </div>
         
             <div id="right-details">
-                <i style="font-size:22px" class="fa">&#xf0e0;</i><a href="mailto:lujie.sue.zhao@gmail.com">lujie.sue.zhao@gmail.com</a>
+                <i style="font-size:22px" class="fa">&#xf0e0;</i><a href="mailto:lujie.sue.zhao@gmail.com"><u>lujie.sue.zhao@gmail.com</u></a>
                 <br>
-                <i style="font-size:24px" class="fa">&#xf08c;</i><a href="https://www.linkedin.com/in/lujie-sue-zhao/">linkedin.com/in/lujie-sue-zhao</a>
+                <i style="font-size:24px" class="fa">&#xf08c;</i><a href="https://www.linkedin.com/in/lujie-sue-zhao/"><u>linkedin.com/in/lujie-sue-zhao</u></a>
                 <br>
-                <i style="font-size:24px" class="fa">&#xf092;</i><a href="https://github.com/LujieZ">LujieZ</a>
+                <i style="font-size:24px" class="fa">&#xf092;</i><a href="https://github.com/LujieZ"><u>LujieZ</u></a>
             </div>
             <div class="clear"></div>
         </div>
@@ -34,10 +42,10 @@
         <div id="display-container">
             <h2>About</h2><br>
             <p> 
-              A sophomore BS student studying Computer Science at NYU Tandon, minors in Business Studies 
-              and Finance. Currently interested in pursuing software/finance internship opportunities.
+                A sophomore BS student studying Computer Science at NYU Tandon, minors in Business 
+                Studies and Finance. Currently interested in pursuing software/finance internship 
+                opportunities.
             </p>
-            <p>Please contact me at lujie.sue.zhao@gmail.com</p>
             </div>
 
         <div id="display-container">
@@ -69,8 +77,8 @@
                                 <img src="images/simulation.JPG">
                             </div>
                             Modified two mobile robots in real world and modeled them accordingly in Revit. 
-                            Built Gazebo simulated environment and collected training data (~7500 images) for 
-                            future machine learning process.
+                            Built Gazebo simulated environment and collected training data (~7500 images) 
+                            for future machine learning process.
                         </p></li>
                         <li><p>
                             Robot Operating System Implementation: Implemented ROS to the two robots. 
@@ -88,8 +96,8 @@
                 <li><p id="bold">Team Member</p>
                     <p id="title">Poly Programming Team</p>
                     <p>
-                      Engage in team activities and contribute in weekly practice for annual ACM-ICPC 
-                      regional contest.
+                        Engage in team activities and contribute in weekly practice for annual ACM-ICPC 
+                        regional contest.
                     </p>
                 </li><br>
                 <li><p id="bold">Preception Sub-Team Member</p>
@@ -125,14 +133,14 @@
         <div id="comment">
             <form action="/comment" method="POST">
                 <label for="user-comment">Type in any text:</label><br>
-                <input type="text" name="user-comment" id="user-comment" value="turnitup"><br>
+                <input type="text" name="user-comment" id="user-comment" value="Turn it up!"><br>
                 <br><input type="submit" value="READY TO GO">
                 <br><br>
             </form>                
         
             <label for="number-comment">How many reviews you want to see?(1-5)</label>
             <select type="number" name="number-comment" id ="number-comment" onchange="parseSomething()">
-                <option value="0">letmesee</option>
+                <option value="0">LET ME SEE</option>
                 <option value="5">5</option>
                 <option value="4">4</option>
                 <option value="3">3</option>
@@ -143,11 +151,9 @@
             
             <ul id="comments-container"></ul><br>
         </div>
-        
-      </div>
-
-    </section>
-
+        </section>
+    
+    </div>
   </body>
 </html>
 
