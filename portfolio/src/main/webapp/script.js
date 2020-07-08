@@ -18,9 +18,9 @@
  * If the user is not logged in, display a login link.
  */
 function checkLoginStatus(){
-    fetch('/home') 
+    fetch('/home')
     .then(response => response.json())
-    .then((object) => { 
+    .then((object) => {
         const status = object.status;
         const url = object.url;
         if (status == 'true') {
@@ -37,7 +37,7 @@ function checkLoginStatus(){
         login.appendChild(button);
 
         // Access the URL that is feteched from /home.
-        button.addEventListener('click', 
+        button.addEventListener('click',
             function() {
                 window.location.href = url;
             });
@@ -48,7 +48,7 @@ function checkLoginStatus(){
  * Fetch the comments in JSON format from the server and populates the DOM.
  */
 function parseSomething(){
-    fetch('/comment')  
+    fetch('/comment')
     .then(response => response.json())
     .then((object) => {
         object.sort(function(object1, object2) {
