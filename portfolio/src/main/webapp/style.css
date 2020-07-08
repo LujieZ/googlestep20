@@ -27,7 +27,7 @@ html,body {
     clear: both;
 }
 
-/* Text format */
+/* Section format */
 nav ul, footer ul {
     overflow: hidden;
     list-style: none;
@@ -91,7 +91,7 @@ ul {
     list-style: none;
 }
 
-ul ul{
+ul ul {
     margin-left: 13px;
     list-style-type: square;
 }
@@ -174,8 +174,9 @@ hr {
 
 #map {
     width: 797px;
-    height: 600px;
+    height: 450px;
     border: thin solid #fcee09;
+    margin-bottom: 50px;
 }
 
 @-webkit-keyframes glow {

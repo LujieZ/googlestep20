@@ -13,21 +13,33 @@
 // limitations under the License.
 
 var map;
+var journeyCoordinates = [];
+
 /**
  * Initial the map and add it to the map page.
  */
 function initMap() {
-    var mapCenter = { lat: 22.319154, lng: 9.275316 }
-    var myHometown  = { lat: 34.724384, lng: 113.640486 }
-    var myHighschool = { lat: 41.342082, lng: -72.913567 }
-    var myLocation = { lat: 40.678038, lng: -73.950493 }
-    var winterTravel = { lat: 34.050925, lng: -118.243498 }
-    var summerTravel = { lat: 31.208968, lng: 121.468941 }
+    var mapCenter = { lat: 30.168979, lng: -171.859749 }; // Somewhere in North Pacific Ocean
+    var myHometown  = { lat: 34.724384, lng: 113.640486 }; // Zhengzhou
+    var myArrival = { lat: 42.361145, lng: -71.057083 } // Boston
+    var myHighschool = { lat: 41.342082, lng: -72.913567 }; // Hamden
+    var myLocation = { lat: 40.678038, lng: -73.950493 }; // Brooklyn
+    var winterTravel = { lat: 34.050925, lng: -118.243498 }; // LA
+    var summerTravel = { lat: 31.208968, lng: 121.468941 }; // Shanghai
+    
+    journeyCoordinates = [ myHometown, myHighschool, myArrival, summerTravel, winterTravel, myLocation ];
+    var journeyPath = new google.maps.Polyline({
+        path: journeyCoordinates,
+        geodestic: true,
+        strokeColor: '#C1328E',
+        strokeOpacity: 1.0,
+        strokeWeight: 1,
+    });
 
     map = new google.maps.Map(
         document.getElementById('map'), 
         {center: mapCenter,
-        zoom: 2.1,
+        zoom: 2.3,
         styles: [ // Style the map with dark mode.
             {elementType: 'geometry', stylers: [{color: '#242f3e'}]},
             {elementType: 'labels.text.stroke', stylers: [{color: '#242f3e'}]},
@@ -107,13 +119,18 @@ function initMap() {
               elementType: 'labels.text.stroke',
               stylers: [{color: '#17263c'}]
             }
-          ]
+        ]
     });
 
     const hometownMarker = new google.maps.Marker({
         position: myHometown,
         map: map,
         title: 'This is where I grew up.'
+    });
+    const arrivalMarker = new google.maps.Marker({
+        position: myArrival,
+        map: map,
+        title: 'I arrived in Boston when I first came to US.'
     });
     const highschoolMarker = new google.maps.Marker({
         position: myHighschool,
@@ -135,4 +152,6 @@ function initMap() {
         map: map,
         title: 'I go here a lot during summmer.'
     });
+    
+    journeyPath.setMap(map);
 }
