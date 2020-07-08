@@ -30,12 +30,9 @@ function checkLoginStatus(){
             var text = 'LOG IN';
         }
 
-        // Create the button.
         var button = document.createElement('button');
         button.setAttribute('id','logbtn');
         button.innerHTML = String(text);
-
-        // Append in login div.
         var login = document.getElementById('login');
         login.appendChild(button);
 
@@ -102,3 +99,4 @@ function createListElement(comment) {
      params.append('id', comment.id);
      fetch('/delete-data', {method: 'POST', body: params});
  }
+ 
