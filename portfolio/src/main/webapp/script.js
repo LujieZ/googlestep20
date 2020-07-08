@@ -49,8 +49,8 @@ function checkLoginStatus(){
  */
 function parseSomething(){
     fetch('/comment')  
-    .then(response => response.json()) 
-    .then((object) => { 
+    .then(response => response.json())
+    .then((object) => {
         object.sort(function(object1, object2) {
             return object2.timestamp - object1.timestamp;
         });
@@ -99,4 +99,3 @@ function createListElement(comment) {
      params.append('id', comment.id);
      fetch('/delete-data', {method: 'POST', body: params});
  }
- 
