@@ -33,24 +33,24 @@ public class HomeServlet extends HttpServlet {
         String urlToRedirectTo = "/index.html";
 
         if (userService.isUserLoggedIn()) {
-            String logoutUrl = userService.createLogoutURL(urlToRedirectTo);
+            String logoutURL = userService.createLogoutURL(urlToRedirectTo);
 
             String result = "{";
             result += "\"status\": \"true\", ";
-            result += "\"url\": \""+ logoutUrl + "\"";
+            result += "\"url\": \""+ logoutURL + "\"";
             result += "}";
 
             response.setContentType("application/json;"); 
             response.getWriter().println(result);
-        } else {
-            String loginUrl = userService.createLoginURL(urlToRedirectTo);
+            return;
+        }
+        String loginURL = userService.createLoginURL(urlToRedirectTo);
 
-            String result = "{";
-            result += "\"status\": \"true\", ";
-            result += "\"url\": \""+ loginUrl + "\"";
-            result += "}";
+        String result = "{";
+        result += "\"status\": \"true\", ";
+        result += "\"url\": \""+ loginURL + "\"";
+        result += "}";
 
-            response.getWriter().println(result);
+        response.getWriter().println(result);
     }
-  }
 }

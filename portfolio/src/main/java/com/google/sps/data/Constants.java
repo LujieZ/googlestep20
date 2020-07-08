@@ -1,7 +1,7 @@
 package com.google.sps.data;
 
 /** 
- * Constant container for all java files in servlets folder.
+ * Global constants used by the servlets.
  */
  public final class Constants {
     public static final String NAME = "Comment";
