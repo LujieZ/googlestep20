@@ -124,35 +124,38 @@
         <hr>
 
         <h3>Leave a comment!</h3>
-        <script>
-            checkLoginStatus();
-        </script>
+        <div id="display-container">
+            <script>
+                checkLoginStatus();
+            </script>
 
-        <div id="login"></div>
-        
-        <div id="comment">
-            <form action="/comment" method="POST">
-                <label for="user-comment">Type in any text:</label><br>
-                <input type="text" name="user-comment" id="user-comment" value="Turn it up!"><br>
-                <br><input type="submit" value="READY TO GO">
-                <br><br>
-            </form>                
-        
-            <label for="number-comment">How many reviews you want to see?(1-5)</label>
-            <select type="number" name="number-comment" id ="number-comment" onchange="parseSomething()">
-                <option value="0">LET ME SEE</option>
-                <option value="5">5</option>
-                <option value="4">4</option>
-                <option value="3">3</option>
-                <option value="2">2</option>
-                <option value="1">1</option>
-            </select>
-            <br><br>
+            <div id="login"></div>
             
-            <ul id="comments-container"></ul><br>
+            <div id="comment">
+                <form action="/comment" method="POST">
+                    <label for="user-comment">Type in any text:</label><br>
+                    <input type="text" name="user-comment" id="user-comment" value="Turn it up!"><br>
+                    <br><input type="submit" value="READY TO GO">
+                    <br><br>
+                </form>                
+            
+                <label for="number-comment">How many reviews you want to see?(1-5)</label>
+                <select type="number" name="number-comment" id ="number-comment" onchange="parseSomething()">
+                    <option value="0">LET ME SEE</option>
+                    <option value="5">5</option>
+                    <option value="4">4</option>
+                    <option value="3">3</option>
+                    <option value="2">2</option>
+                    <option value="1">1</option>
+                </select>
+                <br><br>
+                
+                <ul id="comments-container"></ul><br>
+            </div>
         </div>
+        
+        <div id="display-container"><br></div>
         </section>
-    
     </div>
   </body>
 </html>
