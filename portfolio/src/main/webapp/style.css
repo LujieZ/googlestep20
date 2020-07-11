@@ -98,8 +98,7 @@ ul ul {
 
 hr {
     display: block; 
-    margin-left: auto; 
-    margin-right: auto;
+    margin: 0 auto 0 auto;
     width: 75%; 
     overflow: hidden; 
     border-style: inset; 
@@ -154,8 +153,7 @@ hr {
 
 #greeting-container {
     padding: 20px 30px;
-    margin-left: auto;
-    margin-right: auto;
+    margin: 0 auto 0 auto;
 }
 
 #login {
@@ -200,8 +198,7 @@ hr {
 }
 
 .content {
-    margin-left: auto;
-    margin-right: auto;
+    margin: 0 auto 0 auto;
     width: 87%;
     max-width: 800px;
     background-color: #0b468c;
@@ -211,8 +208,7 @@ hr {
 .hide1 {
     display: none;
     width: 60%;
-    margin-left: auto;
-    margin-right: auto;
+    margin: 0 auto 0 auto;
 }
 
 .hide1 img {
@@ -223,8 +219,7 @@ hr {
 .hide2 {
     display: none;
     width: 60%;
-    margin-left: auto;
-    margin-right: auto;
+    margin: 0 auto 0 auto;
 }
 
 .hide2 img {
@@ -264,5 +259,5 @@ a.menu_links {
 }
 
 .sticky + .content {
-  padding-top: 60px;
+    padding-top: 60px;
 }

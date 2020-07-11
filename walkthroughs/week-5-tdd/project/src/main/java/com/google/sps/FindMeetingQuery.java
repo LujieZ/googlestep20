@@ -14,8 +14,6 @@
 
 package com.google.sps;
 
-import java.util.Set;
-import java.util.HashSet;
 import java.util.Collection;
 import java.util.Arrays;
 import java.util.ArrayList;
@@ -25,35 +23,51 @@ public final class FindMeetingQuery {
     public static final int DAY_END = TimeRange.END_OF_DAY;
     public static final TimeRange WHOLE_DAY = TimeRange.WHOLE_DAY;
 
-    /**
-      * Find all times that the meeting could happen. Two pointers rangeStart
-      * and rangeEnd are pointing at the current avaliable TimeRange. If the
-      * current avaliable TimeRange has longer duration than the meeting duration,
-      * add it to avaliable meetingTimes.
-      */
     public Collection<TimeRange> query(Collection<Event> events, MeetingRequest request) {
-        Collection<TimeRange> meetingTimes = new ArrayList<TimeRange>();
-        long duration = request.getDuration();
-        Collection<String> attendees = request.getAttendees(); 
+        long meetingDuration = request.getDuration();
+        // Required attendees for the request meeting.
+        Collection<String> requiredAttendees = request.getAttendees(); 
+        // All attendees (required and optional) for the request meeting.
+        Collection<String> allAttendees = new ArrayList<>(requiredAttendees);
+        allAttendees.addAll(request.getOptionalAttendees());
 
-        // If the meeting duration is longer than the whole day TimeRange,
-        // return empty array as the meetingTimes collection.
-        if (duration > WHOLE_DAY.duration()) {
+        // If the meeting duration is invalid, return an empty array list as 
+        // the meetingTimes collection.
+        if (meetingDuration > WHOLE_DAY.duration() || meetingDuration == 0) {
             return Arrays.asList();
-        }
+            }
 
-        // Remove double booked attendees for the meeting.
-        Set<String> attendeesSet = new HashSet<String>();
-        for (String attendee : attendees) {
-            attendeesSet.add(attendee);
+        // Find avaliable TimeRange for both required and optional attendees.
+        Collection<TimeRange> allMeetingTimes = 
+            findMeetingTimes(events, allAttendees, meetingDuration);
+
+        // If there is meeting time for all, or there is no required attendee, 
+        // return meetingTimes for all attendees.
+        if (allMeetingTimes.size() > 0 || requiredAttendees.size() == 0) {
+            return allMeetingTimes;
         }
+        // If not, return avaliable TimeRange for required attendees.
+        return findMeetingTimes(
+            events, requiredAttendees, meetingDuration);
+    }
+
+    /**
+      * Find all times that the meeting could happen, given attendees and duration. 
+      * Two pointers rangeStart and rangeEnd are pointing at the current avaliable 
+      * TimeRange. If the current avaliable TimeRange has longer duration than the 
+      * request meeting duration, add it to avaliable meetingTimes.
+      */
+    private static Collection<TimeRange> findMeetingTimes(
+        Collection<Event> events, Collection<String> attendees, long duration) {
+        Collection<TimeRange> meetingTimes = new ArrayList<TimeRange>();
 
         // The TimeRange of the last event that is went through.
         TimeRange lastRange = TimeRange.fromStartDuration(DAY_END, 0);
         int rangeStart = DAY_START; // Pointer to start of the previous event.
         int rangeEnd = DAY_END; // Pointer to the end of the previous event.
 
-        // Linear search the current events to add new TimeRange to meetingTimes.
+        // Linear search the current events and add new TimeRange to 
+        // meetingTimes.
         for (Event event : events) {
             Collection<String> eventAttendees = event.getAttendees();
             TimeRange eventWhen = event.getWhen();
@@ -61,22 +75,24 @@ public final class FindMeetingQuery {
             int eventEnd = eventWhen.end();
 
             // Check if the pervious event and current event overlap.
-            if (rangeStart > eventStart){
-                // If overlap, change the next avaliable rangeTime to the later
-                // end time of the two.
+            if (rangeStart > eventStart) {
+                // If overlap, change the next avaliable start of the TimeRange 
+                // to the later end time of the two.
                 if (eventEnd > lastRange.end()) {
                     rangeStart = eventEnd;
                 } else {
                     rangeStart = lastRange.end();
                 }
-            // If they don't overlap, check if required attendees shows up in
+            // If they don't overlap, check if given attendees shows up in
             // the event.
             } else {
                 // If not, set the whole day as avaliable.
-                if (!attendeesSet.containsAll(eventAttendees)) {
+                if (!attendees.containsAll(eventAttendees)) {
                         return Arrays.asList(WHOLE_DAY);
                 }
-                TimeRange newRange = TimeRange.fromStartEnd(rangeStart, eventStart, false);
+                // Initialize the current avaliable TimeRange.
+                TimeRange newRange = TimeRange.fromStartEnd(
+                    rangeStart, eventStart, false);
                 if (newRange.duration() >= duration) {
                     meetingTimes.add(newRange);
                 }
@@ -86,12 +102,11 @@ public final class FindMeetingQuery {
         }
         TimeRange finalRange = TimeRange.fromStartEnd(rangeStart, rangeEnd, true);
         
-        // Check if the duration of finalRange longer than the meeting duration.
-        if (finalRange.duration() > duration) {
+        // Check if the duration of the final TimeRange longer than the meeting 
+        // duration.
+        if (finalRange.duration() >= duration) {
             meetingTimes.add(finalRange);
         }
         return meetingTimes;
     }
-
-
 }
