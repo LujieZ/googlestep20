@@ -10,7 +10,7 @@
     type="text/javascript"></script>
   </head>
 
-  <body onload = "parseSomething()">
+  <body onload = "checkLoginStatus(); parseSomething();">
     <nav>
         <ul class="sticky">
             <li><a href="/index.html">HOME</a></li>
@@ -125,9 +125,6 @@
 
         <h3>Leave a comment!</h3>
         <div id="display-container">
-            <script>
-                checkLoginStatus();
-            </script>
 
             <div id="login"></div>
             
@@ -150,7 +147,9 @@
                 </select>
                 <br><br>
                 
-                <ul id="comments-container"></ul><br>
+                <ul id="comments-container"></ul>
+                <br>
+
             </div>
         </div>
         

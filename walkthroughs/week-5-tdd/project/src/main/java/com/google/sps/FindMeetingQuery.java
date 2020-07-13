@@ -37,9 +37,9 @@ public final class FindMeetingQuery {
         // the meetingTimes collection.
         if (meetingDuration > WHOLE_DAY.duration() || meetingDuration == 0) {
             return Arrays.asList();
-            }
+        }
 
-        // Find avaliable TimeRange for both required and optional attendees.
+        // Find available TimeRange for both required and optional attendees.
         Collection<TimeRange> allMeetingTimes = 
             findMeetingTimes(events, allAttendees, meetingDuration);
 
@@ -48,16 +48,16 @@ public final class FindMeetingQuery {
         if (allMeetingTimes.size() > 0 || requiredAttendees.size() == 0) {
             return allMeetingTimes;
         }
-        // If not, return avaliable TimeRange for required attendees.
+        // If not, return available TimeRange for required attendees.
         return findMeetingTimes(
             events, requiredAttendees, meetingDuration);
     }
 
     /**
       * Find all times that the meeting could happen, given attendees and duration. 
-      * Two pointers rangeStart and rangeEnd are pointing at the current avaliable 
-      * TimeRange. If the current avaliable TimeRange has longer duration than the 
-      * request meeting duration, add it to avaliable meetingTimes.
+      * Pointer rangeStart is pointing at the start of the current available 
+      * TimeRange. If the current available TimeRange has longer duration than the 
+      * requested meeting duration, add it to available meetingTimes.
       */
     private static Collection<TimeRange> findMeetingTimes(
         Collection<Event> events, Collection<String> attendees, long duration) {
@@ -65,12 +65,9 @@ public final class FindMeetingQuery {
 
         // Sort the events by the start time.
         List<Event> eventsSorted = new ArrayList<Event>(events);
-        Collections.sort(eventsSorted, Event.defaultComparator);
+        Collections.sort(eventsSorted, Event.SORT_BY_START_TIME);
 
-        // The TimeRange of the last event that is went through.
-        TimeRange lastRange = TimeRange.fromStartDuration(DAY_END, 0);
         int rangeStart = DAY_START; // Pointer to start of the previous event.
-        int rangeEnd = DAY_END; // Pointer to the end of the previous event.
 
         // Linear search the current events and add new TimeRange to 
         // meetingTimes.
@@ -80,31 +77,28 @@ public final class FindMeetingQuery {
             int eventStart = eventWhen.start();
             int eventEnd = eventWhen.end();
 
-            // Check if the pervious event and current event overlap.
-            if (rangeStart > eventStart) {
-                // If overlap, change the next avaliable start of the TimeRange 
-                // to the later end time of the two.
-                if (eventEnd > lastRange.end()) {
-                    rangeStart = eventEnd;
-                } else {
-                    rangeStart = lastRange.end();
-                }
-            // If they don't overlap, check if given attendees shows up in
-            // the event.
-            } else {
-                // If they do, initialize the current avaliable TimeRange.
-                if (attendees.containsAll(eventAttendees)) {
-                    TimeRange newRange = TimeRange.fromStartEnd(
-                        rangeStart, eventStart, false);
-                    if (newRange.duration() >= duration) {
-                        meetingTimes.add(newRange);
+            // Check if given attendees shows up in the event.
+            if (attendees.containsAll(eventAttendees)) {
+                // Check if the current event starts before the previous event ends,
+                // or there is no gap in between.
+                if (rangeStart >= eventStart) {
+                    // If so, check which ends earilier and change the start of next 
+                    // available TimeRange to the later end time of the two.
+                    if (eventEnd > rangeStart) {
+                        rangeStart = eventEnd;
                     }
+                // If they don't overlap, initialize the current available TimeRange.
+                } else {               
+                    TimeRange newRange = TimeRange.fromStartEnd(
+                            rangeStart, eventStart, false);
+                        if (newRange.duration() >= duration) {
+                            meetingTimes.add(newRange);
+                        }
                     rangeStart = eventEnd;
                 }
             }
-            lastRange = eventWhen;
         }
-        TimeRange finalRange = TimeRange.fromStartEnd(rangeStart, rangeEnd, true);
+        TimeRange finalRange = TimeRange.fromStartEnd(rangeStart, DAY_END, true);
         
         // Check if the duration of the final TimeRange longer than the meeting 
         // duration.

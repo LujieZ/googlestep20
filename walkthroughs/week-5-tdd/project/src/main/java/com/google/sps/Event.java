@@ -98,7 +98,7 @@ public final class Event {
   /**
    * Enable sort by the start time.
    */
-    public static final Comparator<Event> defaultComparator = new Comparator<Event> () {
+    public static final Comparator<Event> SORT_BY_START_TIME = new Comparator<Event> () {
         @Override
         public int compare(Event event1, Event event2) {
             return event1.when.start() - event2.when.start();
