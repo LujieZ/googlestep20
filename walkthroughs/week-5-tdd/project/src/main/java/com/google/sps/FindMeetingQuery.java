@@ -14,9 +14,11 @@
 
 package com.google.sps;
 
-import java.util.Collection;
 import java.util.Arrays;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 public final class FindMeetingQuery {
     public static final int DAY_START = TimeRange.START_OF_DAY;
@@ -61,6 +63,10 @@ public final class FindMeetingQuery {
         Collection<Event> events, Collection<String> attendees, long duration) {
         Collection<TimeRange> meetingTimes = new ArrayList<TimeRange>();
 
+        // Sort the events by the start time.
+        List<Event> eventsSorted = new ArrayList<Event>(events);
+        Collections.sort(eventsSorted, Event.defaultComparator);
+
         // The TimeRange of the last event that is went through.
         TimeRange lastRange = TimeRange.fromStartDuration(DAY_END, 0);
         int rangeStart = DAY_START; // Pointer to start of the previous event.
@@ -68,7 +74,7 @@ public final class FindMeetingQuery {
 
         // Linear search the current events and add new TimeRange to 
         // meetingTimes.
-        for (Event event : events) {
+        for (Event event : eventsSorted) {
             Collection<String> eventAttendees = event.getAttendees();
             TimeRange eventWhen = event.getWhen();
             int eventStart = eventWhen.start();
@@ -86,17 +92,15 @@ public final class FindMeetingQuery {
             // If they don't overlap, check if given attendees shows up in
             // the event.
             } else {
-                // If not, set the whole day as avaliable.
-                if (!attendees.containsAll(eventAttendees)) {
-                        return Arrays.asList(WHOLE_DAY);
+                // If they do, initialize the current avaliable TimeRange.
+                if (attendees.containsAll(eventAttendees)) {
+                    TimeRange newRange = TimeRange.fromStartEnd(
+                        rangeStart, eventStart, false);
+                    if (newRange.duration() >= duration) {
+                        meetingTimes.add(newRange);
+                    }
+                    rangeStart = eventEnd;
                 }
-                // Initialize the current avaliable TimeRange.
-                TimeRange newRange = TimeRange.fromStartEnd(
-                    rangeStart, eventStart, false);
-                if (newRange.duration() >= duration) {
-                    meetingTimes.add(newRange);
-                }
-                rangeStart = eventEnd;
             }
             lastRange = eventWhen;
         }
