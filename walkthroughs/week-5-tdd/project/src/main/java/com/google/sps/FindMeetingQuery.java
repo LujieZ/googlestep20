@@ -25,6 +25,12 @@ public final class FindMeetingQuery {
     public static final int DAY_END = TimeRange.END_OF_DAY;
     public static final TimeRange WHOLE_DAY = TimeRange.WHOLE_DAY;
 
+    /**
+      * Return a query of TimeRange that attendees can meet for a requested meeting.
+      * If there is not enough room for optional attendees, find TimeRange that just 
+      * work for required attendees. If there is no required attendees, find the query
+      * for just optional attendees.
+      */
     public Collection<TimeRange> query(Collection<Event> events, MeetingRequest request) {
         long meetingDuration = request.getDuration();
         // Required attendees for the request meeting.
@@ -33,8 +39,7 @@ public final class FindMeetingQuery {
         Collection<String> allAttendees = new ArrayList<>(requiredAttendees);
         allAttendees.addAll(request.getOptionalAttendees());
 
-        // If the meeting duration is invalid, return an empty array list as 
-        // the meetingTimes collection.
+        // If the meeting duration is invalid, return an empty Collection.
         if (meetingDuration > WHOLE_DAY.duration() || meetingDuration == 0) {
             return Arrays.asList();
         }
@@ -43,8 +48,9 @@ public final class FindMeetingQuery {
         Collection<TimeRange> allMeetingTimes = 
             findMeetingTimes(events, allAttendees, meetingDuration);
 
-        // If there is meeting time for all, or there is no required attendee, 
-        // return meetingTimes for all attendees.
+        // If there is meeting time for all, return allMeetingTimes so that 
+        // both required and optional can attend the meeting. If there is no 
+        // required attendee, return allMeetingTimes for optional attendees.
         if (allMeetingTimes.size() > 0 || requiredAttendees.size() == 0) {
             return allMeetingTimes;
         }
@@ -56,8 +62,10 @@ public final class FindMeetingQuery {
     /**
       * Find all times that the meeting could happen, given attendees and duration. 
       * Pointer rangeStart is pointing at the start of the current available 
-      * TimeRange. If the current available TimeRange has longer duration than the 
-      * requested meeting duration, add it to available meetingTimes.
+      * TimeRange to keep track of where the meeting could possibly start. The time 
+      * between the rangeStart and start time of the current event is the current 
+      * avaliable TimeRange. If the current available TimeRange has longer duration 
+      * than the requested meeting duration, add it to available meetingTimes.
       */
     private static Collection<TimeRange> findMeetingTimes(
         Collection<Event> events, Collection<String> attendees, long duration) {
@@ -100,8 +108,6 @@ public final class FindMeetingQuery {
         }
         TimeRange finalRange = TimeRange.fromStartEnd(rangeStart, DAY_END, true);
         
-        // Check if the duration of the final TimeRange longer than the meeting 
-        // duration.
         if (finalRange.duration() >= duration) {
             meetingTimes.add(finalRange);
         }
