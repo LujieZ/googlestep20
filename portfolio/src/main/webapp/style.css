@@ -3,16 +3,16 @@
 
 /* Display reset */
 html,body,div,span,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,abbr,address,cite,code,del,dfn,em,img,ins,kbd,q,samp,small,strong,sub,sup,var,b,i,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,canvas,details,figcaption,figure,footer,header,hgroup,menu,nav,section,summary,time,mark,audio,video {
-    border: 0;
-    font: inherit;
-    font-size: 100%;
-    margin: 0;
-    padding: 0;
-    vertical-align: baseline;
+    border:0;
+    font:inherit;
+    font-size:100%;
+    margin:0;
+    padding:0;
+    vertical-align:baseline;
 }
 
 article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section {
-    display: block;
+    display:block;
 }
 
 html,body {
@@ -98,7 +98,8 @@ ul ul {
 
 hr {
     display: block; 
-    margin: 0 auto 0 auto;
+    margin-left: auto; 
+    margin-right: auto;
     width: 75%; 
     overflow: hidden; 
     border-style: inset; 
@@ -153,11 +154,12 @@ hr {
 
 #greeting-container {
     padding: 20px 30px;
-    margin: 0 auto 0 auto;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 #login {
-    margin: 20px 0 30px 0;
+    margin-top: 20px;
     float: right;
 }
 
@@ -197,16 +199,19 @@ hr {
 }
 
 .content {
-    margin: 0 auto 30px auto;
+    margin-left: auto;
+    margin-right: auto;
     width: 87%;
     max-width: 800px;
     background-color: #0b468c;
+    margin-bottom: 30px;
 }
 
 .hide1 {
     display: none;
     width: 60%;
-    margin: 0 auto 0 auto;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .hide1 img {
@@ -217,7 +222,8 @@ hr {
 .hide2 {
     display: none;
     width: 60%;
-    margin: 0 auto 0 auto;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .hide2 img {
@@ -257,5 +263,5 @@ a.menu_links {
 }
 
 .sticky + .content {
-    padding-top: 60px;
+  padding-top: 60px;
 }
