@@ -26,10 +26,10 @@ public final class FindMeetingQuery {
     public static final TimeRange WHOLE_DAY = TimeRange.WHOLE_DAY;
 
     /**
-      * Return a query of TimeRange that attendees can meet for a requested meeting.
-      * If there is not enough room for optional attendees, find TimeRange that just 
-      * work for required attendees. If there is no required attendees, find the query
-      * for just optional attendees.
+      * Return a collection of TimeRange that attendees can meet for a requested 
+      * meeting. If there is not enough room for optional attendees, find TimeRanges 
+      * that just work for required attendees. If there are no required attendees, 
+      * find the TimeRangs for just the optional attendees.
       */
     public Collection<TimeRange> query(Collection<Event> events, MeetingRequest request) {
         long meetingDuration = request.getDuration();
@@ -40,7 +40,7 @@ public final class FindMeetingQuery {
         allAttendees.addAll(request.getOptionalAttendees());
 
         // If the meeting duration is invalid, return an empty Collection.
-        if (meetingDuration > WHOLE_DAY.duration() || meetingDuration == 0) {
+        if (meetingDuration > WHOLE_DAY.duration() || meetingDuration <= 0) {
             return Arrays.asList();
         }
 
@@ -49,11 +49,17 @@ public final class FindMeetingQuery {
             findMeetingTimes(events, allAttendees, meetingDuration);
 
         // If there is meeting time for all, return allMeetingTimes so that 
-        // both required and optional can attend the meeting. If there is no 
-        // required attendee, return allMeetingTimes for optional attendees.
-        if (allMeetingTimes.size() > 0 || requiredAttendees.size() == 0) {
+        // both required and optional can attend the meeting. 
+        if (allMeetingTimes.size() > 0) {
             return allMeetingTimes;
         }
+
+        // If there is no required attendee, return allMeetingTimes for 
+        // optional attendees.
+        if (requiredAttendees.size() == 0) {
+            return allMeetingTimes;
+        }
+
         // If not, return available TimeRange for required attendees.
         return findMeetingTimes(
             events, requiredAttendees, meetingDuration);
@@ -61,11 +67,12 @@ public final class FindMeetingQuery {
 
     /**
       * Find all times that the meeting could happen, given attendees and duration. 
-      * Pointer rangeStart is pointing at the start of the current available 
-      * TimeRange to keep track of where the meeting could possibly start. The time 
-      * between the rangeStart and start time of the current event is the current 
-      * avaliable TimeRange. If the current available TimeRange has longer duration 
-      * than the requested meeting duration, add it to available meetingTimes.
+      * We loop through all given events to find all available TimeRanges. Pointer 
+      * rangeStart is pointing at the start of the current available TimeRange, which 
+      * is the time between the pointer and start time of the current event.If the current 
+      * available TimeRange has longer duration than the requested meeting duration, add
+      * it to available meetingTimes. Then rangeStart is updated to the end of the current
+      * event.
       */
     private static Collection<TimeRange> findMeetingTimes(
         Collection<Event> events, Collection<String> attendees, long duration) {
@@ -73,7 +80,7 @@ public final class FindMeetingQuery {
 
         // Sort the events by the start time.
         List<Event> eventsSorted = new ArrayList<Event>(events);
-        Collections.sort(eventsSorted, Event.SORT_BY_START_TIME);
+        Collections.sort(eventsSorted, Event.SORT_BY_START_ASCENDING);
 
         int rangeStart = DAY_START; // Pointer to start of the previous event.
 
@@ -86,7 +93,7 @@ public final class FindMeetingQuery {
             int eventEnd = eventWhen.end();
 
             // Check if given attendees shows up in the event.
-            if (attendees.containsAll(eventAttendees)) {
+            if (isAttending(attendees, eventAttendees)) {
                 // Check if the current event starts before the previous event ends,
                 // or there is no gap in between.
                 if (rangeStart >= eventStart) {
@@ -95,8 +102,8 @@ public final class FindMeetingQuery {
                     if (eventEnd > rangeStart) {
                         rangeStart = eventEnd;
                     }
-                // If they don't overlap, initialize the current available TimeRange.
-                } else {               
+                } else {
+                    // If they don't overlap, initialize the current available TimeRange.            
                     TimeRange newRange = TimeRange.fromStartEnd(
                             rangeStart, eventStart, false);
                         if (newRange.duration() >= duration) {
@@ -106,11 +113,27 @@ public final class FindMeetingQuery {
                 }
             }
         }
+
         TimeRange finalRange = TimeRange.fromStartEnd(rangeStart, DAY_END, true);
-        
         if (finalRange.duration() >= duration) {
             meetingTimes.add(finalRange);
         }
+
         return meetingTimes;
+    }
+
+    /**
+      * Check if any eventAttendees present in the given collection of attendees. 
+      * Return true if any given attendees present in the current event. Return
+      * false otherwise.
+      */
+    private static boolean isAttending(
+        Collection<String> attendees, Collection<String> eventAttendees) {
+        for (String eventAttendee : eventAttendees) {
+            if (attendees.contains(eventAttendee)) {
+                return true;
+            }
+        }
+        return false;
     }
 }
