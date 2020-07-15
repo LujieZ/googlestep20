@@ -97,7 +97,7 @@ public final class Event {
   }
 
   /**
-   * Enable sort by the start time.
+   * Enable sort by the start time in ascending order.
    */
     public static final Comparator<Event> SORT_BY_START_ASCENDING = new Comparator<Event> () {
         @Override

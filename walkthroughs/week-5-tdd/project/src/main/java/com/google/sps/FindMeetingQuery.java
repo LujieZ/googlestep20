@@ -56,7 +56,7 @@ public final class FindMeetingQuery {
 
         // If there is no required attendee, return allMeetingTimes for 
         // optional attendees.
-        if (requiredAttendees.size() == 0) {
+        if (requiredAttendees.isEmpty()) {
             return allMeetingTimes;
         }
 
@@ -124,7 +124,7 @@ public final class FindMeetingQuery {
 
     /**
       * Check if any eventAttendees present in the given collection of attendees. 
-      * Return true if any given attendees present in the current event. Return
+      * Return true if any given attendees present in the eventAttendees. Return
       * false otherwise.
       */
     private static boolean isAttending(

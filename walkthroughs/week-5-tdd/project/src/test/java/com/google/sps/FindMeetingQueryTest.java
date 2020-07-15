@@ -391,4 +391,25 @@ public final class FindMeetingQueryTest {
 
         Assert.assertEquals(expected, actual);
     }
+
+    @Test
+    public void moreThanOneAttendee() {
+        // Scenario 6: Consider the event that only have one required attendee.
+        Collection<Event> events = Arrays.asList(
+            new Event("Event 1", TimeRange.fromStartEnd(TimeRange.START_OF_DAY, TIME_0830AM, false),
+                Arrays.asList(PERSON_A, PERSON_B)),
+            new Event("Event 2", TimeRange.fromStartEnd(TIME_0830AM, TimeRange.END_OF_DAY, false),
+                Arrays.asList(PERSON_B)),
+            new Event("Event 3", TimeRange.fromStartEnd(TIME_1100AM, TimeRange.END_OF_DAY, true),
+                Arrays.asList(PERSON_A)));
+        
+        MeetingRequest request = new MeetingRequest(Arrays.asList(PERSON_A), DURATION_30_MINUTES);
+        request.addOptionalAttendee(PERSON_B);
+        
+        Collection<TimeRange> actual = query.query(events, request);
+        Collection<TimeRange> expected = 
+            Arrays.asList(TimeRange.fromStartEnd(TIME_0830AM, TIME_1100AM, false));
+
+        Assert.assertEquals(expected, actual);
+    }
 }
