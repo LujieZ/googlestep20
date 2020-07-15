@@ -10,7 +10,7 @@
     type="text/javascript"></script>
   </head>
 
-  <body onload = "parseSomething()">
+  <body onload = "checkLoginStatus(); parseSomething();">
     <nav>
         <ul class="sticky">
             <li><a href="/index.html">HOME</a></li>
@@ -55,7 +55,7 @@
                     <p id="title">Research &amp; Development Committee, General Engineering 1003 Course</p>
                     <p>
                         Redesign the course and build 
-                        <a href="https://github.com/tg1625/Vex-Library">C++ library</a> 
+                        <a href="https://github.com/tg1625/Vex-Library"><u>C++ library</u></a> 
                         for new VEX semester-long design project Mars Rover Robot. Mentor Rapid Assembly
                         & Design projects while providing technical assistance. Teach first year students
                         basic engineering concepts through various laboratory experiments.
@@ -124,35 +124,37 @@
         <hr>
 
         <h3>Leave a comment!</h3>
-        <script>
-            checkLoginStatus();
-        </script>
+        <div id="display-container">
 
-        <div id="login"></div>
-        
-        <div id="comment">
-            <form action="/comment" method="POST">
-                <label for="user-comment">Type in any text:</label><br>
-                <input type="text" name="user-comment" id="user-comment" value="Turn it up!"><br>
-                <br><input type="submit" value="READY TO GO">
-                <br><br>
-            </form>                
-        
-            <label for="number-comment">How many reviews you want to see?(1-5)</label>
-            <select type="number" name="number-comment" id ="number-comment" onchange="parseSomething()">
-                <option value="0">LET ME SEE</option>
-                <option value="5">5</option>
-                <option value="4">4</option>
-                <option value="3">3</option>
-                <option value="2">2</option>
-                <option value="1">1</option>
-            </select>
-            <br><br>
+            <div id="login"></div>
             
-            <ul id="comments-container"></ul><br>
+            <div id="comment">
+                <form action="/comment" method="POST">
+                    <label for="user-comment">Type in any text:</label><br>
+                    <input type="text" name="user-comment" id="user-comment" value="Turn it up!"><br>
+                    <br><input type="submit" value="READY TO GO">
+                    <br><br>
+                </form>                
+            
+                <label for="number-comment">How many reviews you want to see?(1-5)</label>
+                <select type="number" name="number-comment" id ="number-comment" onchange="parseSomething()">
+                    <option value="0">LET ME SEE</option>
+                    <option value="5">5</option>
+                    <option value="4">4</option>
+                    <option value="3">3</option>
+                    <option value="2">2</option>
+                    <option value="1">1</option>
+                </select>
+                <br><br>
+                
+                <ul id="comments-container"></ul>
+                <br>
+
+            </div>
         </div>
+        
+        <div id="display-container"><br></div>
         </section>
-    
     </div>
   </body>
 </html>
