@@ -42,7 +42,7 @@ public final class FindMeetingQuery {
             return Arrays.asList();
         }
 
-        // Find TimeRanges that both required and optional attendees are available.
+        // Find TimeRanges when both required and optional attendees are available.
         Collection<TimeRange> allMeetingTimes = 
             findMeetingTimes(events, allAttendees, meetingDuration);
 
@@ -50,10 +50,9 @@ public final class FindMeetingQuery {
             return allMeetingTimes;
         }
 
-        // If there is no required attendee, return allMeetingTimes for 
-        // optional attendees.
+        // If there is no required attendee, return an empty collection.
         if (requiredAttendees.isEmpty()) {
-            return allMeetingTimes;
+            return Arrays.asList();
         }
 
         // If not, return available TimeRange for required attendees.
@@ -62,10 +61,12 @@ public final class FindMeetingQuery {
     }
 
     /**
-      * Find all times that the meeting could happen for given attendees. Loop through 
-      * the given events and update the rangeStart pointer, so that it is pointing at the 
-      * start of the current available TimeRange. If the current available TimeRange has 
-      * longer duration than the requested meeting duration, add it to available meetingTimes. 
+      * Find all times that the meeting could happen for given attendees. 
+      * Loop through the given events by start time in ascending order 
+      * and update the rangeStart pointer, so that when events overlap, 
+      * the pointer always pointing at the start of the current available 
+      * TimeRange. If the current available TimeRange has longer duration 
+      * than the requested meeting duration, add it to available meetingTimes. 
       * Then update the pointer to the end of the current event.
       */
     private static Collection<TimeRange> findMeetingTimes(
@@ -77,8 +78,8 @@ public final class FindMeetingQuery {
         Collections.sort(eventsSorted, Event.SORT_BY_START_ASCENDING);
 
         // Candidate for the start of the current available TimeRange.
-        // It will also be pointing at the end of previous event that 
-        // contains any of the give attendees.
+        // It will always pointing at the end of previous event that 
+        // contains any of the given attendees.
         int rangeStart = DAY_START;
 
         // Loop through the sorted events and add new TimeRange to 
@@ -94,17 +95,18 @@ public final class FindMeetingQuery {
                 if (rangeStart >= eventStart) {
                     // There is overlap or no gap between the events.
                     if (eventEnd > rangeStart) {
-                        // Update the pointer so that it is pointing at the start of new 
+                        // Update the pointer so that it is pointing to the start of new 
                         // available TimeRange.
                         rangeStart = eventEnd;
                     }
                 } else {
-                    // If they are separate, initialize the current available TimeRange.            
+                    // If the current and the previous events are separate, initialize the
+                    // current available TimeRange.            
                     TimeRange newRange = TimeRange.fromStartEnd(
                             rangeStart, eventStart, false);
-                        if (newRange.duration() >= duration) {
-                            meetingTimes.add(newRange);
-                        }
+                    if (newRange.duration() >= duration) {
+                        meetingTimes.add(newRange);
+                    }
                     rangeStart = eventEnd;
                 }
             }
@@ -119,7 +121,7 @@ public final class FindMeetingQuery {
     }
 
     /**
-      * Check and return true if any given attendees present in the eventAttendees. 
+      * Check and return true if any given attendees are present in the eventAttendees. 
       * Return false otherwise.
       */
     private static boolean isAttending(
