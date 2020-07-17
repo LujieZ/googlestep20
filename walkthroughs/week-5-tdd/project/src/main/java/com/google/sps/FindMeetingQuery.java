@@ -48,7 +48,7 @@ public final class FindMeetingQuery {
         }
 
         if (requiredAttendees.isEmpty()) {
-            // There were no requried attendees (all were optional), and we failed
+            // There were no required attendees (all were optional), and we failed
             // to find an avaiable meeting time. Thus we return an empty result,
             // as there is nothing else we can do.
             return Arrays.asList();
