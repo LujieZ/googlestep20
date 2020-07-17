@@ -21,9 +21,6 @@ import java.util.Collections;
 import java.util.List;
 
 public final class FindMeetingQuery {
-    public static final int DAY_START = TimeRange.START_OF_DAY;
-    public static final int DAY_END = TimeRange.END_OF_DAY;
-    public static final TimeRange WHOLE_DAY = TimeRange.WHOLE_DAY;
 
     /**
       * Return a collection of TimeRanges that attendees can meet for a requested 
@@ -37,8 +34,8 @@ public final class FindMeetingQuery {
         Collection<String> allAttendees = new ArrayList<>(requiredAttendees);
         allAttendees.addAll(request.getOptionalAttendees());
 
-        if (meetingDuration > WHOLE_DAY.duration() || meetingDuration <= 0) {
-            // The meeting duation is invalid.
+        if (meetingDuration > TimeRange.WHOLE_DAY.duration() || meetingDuration <= 0) {
+            // The meeting duation is invalid. 
             return Arrays.asList();
         }
 
@@ -50,12 +47,16 @@ public final class FindMeetingQuery {
             return allMeetingTimes;
         }
 
-        // If there is no required attendee, return an empty collection.
         if (requiredAttendees.isEmpty()) {
+            // There were no requried attendees (all were optional), and we failed
+            // to find an avaiable meeting time. Thus we return an empty result,
+            // as there is nothing else we can do.
             return Arrays.asList();
         }
 
-        // If not, return available TimeRange for required attendees.
+        // We failed to find an available meeting time that accommodates both the
+        // required and optional attendees, so now we are ignoring all the optional
+        // attendees.
         return findMeetingTimes(
             events, requiredAttendees, meetingDuration);
     }
@@ -64,9 +65,9 @@ public final class FindMeetingQuery {
       * Find all times that the meeting could happen for given attendees. 
       * Loop through the given events by start time in ascending order 
       * and update the rangeStart pointer, so that when events overlap, 
-      * the pointer always pointing at the start of the current available 
+      * the pointer always pointing to the start of the current available 
       * TimeRange. If the current available TimeRange has longer duration 
-      * than the requested meeting duration, add it to available meetingTimes. 
+      * than the requested meeting duration, we add it to available meetingTimes. 
       * Then update the pointer to the end of the current event.
       */
     private static Collection<TimeRange> findMeetingTimes(
@@ -78,9 +79,9 @@ public final class FindMeetingQuery {
         Collections.sort(eventsSorted, Event.SORT_BY_START_ASCENDING);
 
         // Candidate for the start of the current available TimeRange.
-        // It will always pointing at the end of previous event that 
+        // It will always pointing to the end of the previous event that 
         // contains any of the given attendees.
-        int rangeStart = DAY_START;
+        int rangeStart = TimeRange.START_OF_DAY;
 
         // Loop through the sorted events and add new TimeRange to 
         // meetingTimes.
@@ -93,15 +94,16 @@ public final class FindMeetingQuery {
             // Check if given attendees shows up in the event.
             if (isAttending(attendees, eventAttendees)) {
                 if (rangeStart >= eventStart) {
-                    // There is overlap or no gap between the events.
+                    // There is overlap or no gap between the current and the 
+                    // previous event.
                     if (eventEnd > rangeStart) {
-                        // Update the pointer so that it is pointing to the start of new 
-                        // available TimeRange.
+                        // Update the pointer so that it is pointing to the start
+                        // of the new available TimeRange.
                         rangeStart = eventEnd;
                     }
                 } else {
-                    // If the current and the previous events are separate, initialize the
-                    // current available TimeRange.            
+                    // If the current and the previous events are separate, 
+                    // initialize the current available TimeRange.            
                     TimeRange newRange = TimeRange.fromStartEnd(
                             rangeStart, eventStart, false);
                     if (newRange.duration() >= duration) {
@@ -112,7 +114,7 @@ public final class FindMeetingQuery {
             }
         }
 
-        TimeRange finalRange = TimeRange.fromStartEnd(rangeStart, DAY_END, true);
+        TimeRange finalRange = TimeRange.fromStartEnd(rangeStart, TimeRange.END_OF_DAY, true);
         if (finalRange.duration() >= duration) {
             meetingTimes.add(finalRange);
         }
@@ -121,8 +123,8 @@ public final class FindMeetingQuery {
     }
 
     /**
-      * Check and return true if any given attendees are present in the eventAttendees. 
-      * Return false otherwise.
+      * Check and return true if any given attendees are present in the 
+      * eventAttendees. Return false otherwise.
       */
     private static boolean isAttending(
         Collection<String> attendees, Collection<String> eventAttendees) {
