@@ -14,14 +14,26 @@
 
 package com.google.sps;
 
+import java.lang.String;
+
 /**
  * Utility class for creating greeting messages.
  */
 public class Greeter {
-  /**
-   * Returns a greeting for the given name.
-   */
-  public String greet(String name) {
-    return "Hello " + name;
-  }
+    /**
+     * Returns a greeting for the given name.
+     */
+    public String greet(String name) {
+        // Trim white spaces in the name.
+        name = name.replaceAll("\\s+", "");
+        // Remove special characters: @,#,$,%.
+        String actualName = "";
+        for (int i = 0; i < name.length(); i++) {
+            char letter = name.charAt(i);
+            if (letter != '@' && letter != '#' && letter != '$' && letter != '%') {
+                actualName += letter;
+            }
+        }
+        return "Hello " + actualName;
+    }
 }

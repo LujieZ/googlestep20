@@ -16,6 +16,7 @@ package com.google.sps;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -89,8 +90,19 @@ public final class Event {
   }
 
   private static boolean equals(Event a, Event b) {
-    // {@code attendees} must be a set for equals to work as expected. According to the {@code Set}
-    // interface documentation, equals will check for set-equality across all set implementations.
+    // {@code attendees} must be a set for equals to work as expected. 
+    // According to the {@code Set} interface documentation, equals 
+    // will check for set-equality across all set implementations.
     return a.title.equals(b.title) && a.when.equals(b.when) && a.attendees.equals(b.attendees);
   }
+
+  /**
+   * Enable sort by the start time in ascending order.
+   */
+    public static final Comparator<Event> SORT_BY_START_ASCENDING = new Comparator<Event> () {
+        @Override
+        public int compare(Event event1, Event event2) {
+            return event1.when.start() - event2.when.start();
+        }
+    };
 }
